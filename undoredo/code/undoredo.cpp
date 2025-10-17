@@ -67,7 +67,7 @@ class Stack{
             return n;
          }
         bool isEmpty(){
-            top == nullptr;
+            top = nullptr;
             return top;
         }
         void clear(){
@@ -98,7 +98,6 @@ class Stack{
 int main() {
     int max_weight=0;
     std::string initial_string = "";
-    int weight =0;
 
     Stack undoStack;
     Stack redoStack;
@@ -107,7 +106,7 @@ int main() {
     redoStack.init();
 
     std::string line;
-    int weight;
+    int weight=0;
 
     while (std::getline(std::cin, line)) {
         if (line.empty()) {
@@ -148,7 +147,6 @@ int main() {
         }
         else if(command == "DELETE"){
             int index= stoi(args[1]);
-            int count=0;
             undoStack.push(initial_string,initial_string.size()-index);
             redoStack.clear();
             initial_string= initial_string.substr(0,index);
