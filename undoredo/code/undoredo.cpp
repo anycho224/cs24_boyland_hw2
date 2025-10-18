@@ -156,26 +156,22 @@ int main() {
             std::cerr << initial_string << std::endl;
         }
         else if (command == "REPLACE"){
-            if(args.size()<3){
-                return;
-            }
-            else{
-                char find_char= args[1][0];
-                char replace_char = args[2][0];
-                int count=0;
-                for(char& c : initial_string){
-                    if(c==find_char){
-                        c=replace_char;
-                        count++;
-                    }   
+            char find_char= args[1][0];
+            char replace_char = args[2][0];
+            int count=0;
+            for(char& c : initial_string){
+                if(c==find_char){
+                    c=replace_char;
+                    count++;
                 }
-                if (count>0){
-                    undoStack.push(initial_string, count);
-                    redoStack.clear();
-                    initial_string = new_string;
-                }
-                std::cerr << initial_string << std::endl;
             }
+            if (count>0){
+                undoStack.push(initial_string,0);
+                redoStack.clear();
+                initial_string = new_string;
+            }
+            std::cerr << initial_string << std::endl;
+        }
         else if(command == "DELETE"){
             int index= std::stoi(args[1]);
             undoStack.push(initial_string,initial_string.size()-index);
