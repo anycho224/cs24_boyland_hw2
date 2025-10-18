@@ -148,7 +148,7 @@ int main() {
             initial_string=new_string;
             undoStack.setMaxWeight(max_weight);
             redoStack.setMaxWeight(max_weight);
-            std::cout << "CREATE " << max_weight << " \"" << initial_string << "\"" << std::endl;
+            std::cerr << "CREATE " << max_weight << " \"" << initial_string << "\"" << std::endl;
         }
         else if (command == "APPEND"){
             std::string string_to_append= "";
@@ -163,57 +163,55 @@ int main() {
             undoStack.push(initial_string, weight);
             redoStack.clear();
             initial_string += string_to_append;
-            std::cout << "APPEND " << initial_string << std::endl;
+            std::cerr << "APPEND " << initial_string << std::endl;
         }
         else if (command == "REPLACE"){
             char find_char= args[1][0];
             char replace_char = args[2][0];
             int count=0;
-            undoStack.push(initial_string,count);
+            undoStack.push(initial_string,0);
+            redoStack.clear();
             for(char& c : initial_string){
                 if(c==find_char){
                     c=replace_char;
                     count++;
                 }
             }
-            undoStack.pop();
-            undoStack.push(initial_string,count);
-            redoStack.clear();
-            std::cout<<"REPLACE " << find_char << " " << replace_char << std::endl;
+            std::cerr<<"REPLACE " << find_char << " " << replace_char << std::endl;
         }
         else if(command == "DELETE"){
             int index= std::stoi(args[1]);
             undoStack.push(initial_string,initial_string.size()-index);
             redoStack.clear();
             initial_string= initial_string.substr(0,index);
-            std::cout<< "DELETE " << initial_string << std::endl;
+            std::cerr<< "DELETE " << initial_string << std::endl;
         }
         else if(command == "UNDO"){
             if(undoStack.isEmpty()){
-                std::cout << "Error: Nothing to undo." << std::endl;
+                std::cerr << "Error: Nothing to undo." << std::endl;
             }
             else{
                 Node* last_undo = undoStack.pop();
                 redoStack.push(initial_string,last_undo->weight);
                 initial_string=last_undo->data;
                 delete last_undo;
-                std::cout << "UNDO " << initial_string << std::endl;
+                std::cerr << "UNDO " << initial_string << std::endl;
             }
         }
         else if(command == "REDO"){
             if(redoStack.isEmpty()){
-                std::cout<< "Error: Nothing to redo." << std::endl;
+                std::cerr<< "Error: Nothing to redo." << std::endl;
             }
             else{
                 Node* last_redo=redoStack.pop();
                 undoStack.push(initial_string,last_redo->weight);
                 initial_string=last_redo->data;
                 delete last_redo;
-                std::cout<< "REDO " << initial_string << std::endl;
+                std::cerr<< "REDO " << initial_string << std::endl;
             }
         }
         else if (command == "PRINT") {
-            std::cout<< initial_string << std::endl;
+            std::cerr<< initial_string << std::endl;
         }
     }
     return 0;
