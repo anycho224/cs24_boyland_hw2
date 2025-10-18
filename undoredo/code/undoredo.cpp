@@ -138,19 +138,18 @@ int main() {
         else if (command == "CREATE"){
             max_weight = std::stoi(args[1]);
             initial_string = args[2];
-            std::cout << "CREATE" << max_weight << " \"" << initial_string << "\"" << std::endl;
+            std::cout << "CREATE " << max_weight << " \"" << initial_string << "\"" << std::endl;
         }
         else if (command == "APPEND"){
             std::string string_to_append= args[1];
             undoStack.push(initial_string,string_to_append.size());
             redoStack.clear();
             initial_string += string_to_append;
-            std::cout << "APPEND" << initial_string << std::endl;
+            std::cout << "APPEND " << initial_string << std::endl;
         }
-        //args[0]="REPLACE" args[1]="t" args[2]= "T"
         else if (command == "REPLACE"){
-            char find_char= args[0][1];
-            char replace_char = args[0][2];
+            char find_char= args[1][0];
+            char replace_char = args[2][0];
             int count=0;
             undoStack.push(initial_string,0);
             for(char& c : initial_string){
@@ -159,7 +158,7 @@ int main() {
                     count++;
                 }
             }
-            std::cout<<"REPLACE" << find_char << " " << replace_char << std::endl;
+            std::cout<<"REPLACE " << find_char << " " << replace_char << std::endl;
         }
         else if(command == "DELETE"){
             int index= stoi(args[1]);
