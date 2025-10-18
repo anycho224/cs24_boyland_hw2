@@ -82,6 +82,16 @@ class Stack{
     void removeBottom(){
         Node* prev= nullptr;
         Node* curr = top;
+        if (!curr){
+            return;
+        }
+        //if only one node
+        if(curr->next == nullptr){
+            total_weight-=curr->weight;
+            delete curr;
+            top = nullptr;
+            
+        }
         //traveres until it reaches the end;
         while (curr->next!=nullptr){
             prev=curr;
