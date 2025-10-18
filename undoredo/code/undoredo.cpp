@@ -122,7 +122,7 @@ int main() {
     redoStack.init();
 
     std::string line;
-    int weight=0;
+    int weight;
 
     while (std::getline(std::cin, line)) {
         if (line.empty()) {
