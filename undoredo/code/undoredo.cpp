@@ -135,7 +135,7 @@ int main() {
         // Example of how to handle a command
         if (command == "CREATE"){
             max_weight = std::stoi(args[1]);
-            std::string input = args[2];
+            initial_string= args[2];
             undoStack.setMaxWeight(max_weight);
             redoStack.setMaxWeight(max_weight);
             std::cerr << initial_string << std::endl;
@@ -159,6 +159,7 @@ int main() {
             char find_char= args[1][0];
             char replace_char = args[2][0];
             int count=0;
+            std::string before = initial_string;
             for(char& c : initial_string){
                 if(c==find_char){
                     c=replace_char;
@@ -166,9 +167,8 @@ int main() {
                 }
             }
             if (count>0){
-                undoStack.push(initial_string,0);
+                undoStack.push(before,count);
                 redoStack.clear();
-                initial_string = new_string;
             }
             std::cerr << initial_string << std::endl;
         }
