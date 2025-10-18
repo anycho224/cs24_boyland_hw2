@@ -55,7 +55,7 @@ class Stack{
             top=n;
             total_weight+=n->weight;
 
-            while (max_weight >0 && total_weight>max_weight){
+            while (max_weight >0 && (total_weight+weight)>max_weight){
                 removeBottom();
             }
         }
