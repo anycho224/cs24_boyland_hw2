@@ -141,9 +141,7 @@ int main() {
             std::cerr << new_string << std::endl;
         }
         else if (command == "APPEND"){
-            if(!redoStack.isEmpty()){
-                redoStack.clear();
-            }
+            redoStack.clear();
             std::string string_to_append= "";
             int count=args.size();
             for(int i=1; i<count;i++){
@@ -159,9 +157,7 @@ int main() {
             std::cerr << new_string << std::endl;
         }
         else if (command == "REPLACE"){
-            if(!redoStack.isEmpty()){
-                redoStack.clear();
-            }
+            redoStack.clear();
             char find_char= args[1][0];
             char replace_char = args[2][0];
             initial_string=new_string;
@@ -178,11 +174,15 @@ int main() {
             std::cerr << new_string << std::endl;
         }
         else if(command == "DELETE"){
-            if(!redoStack.isEmpty()){
-                redoStack.clear();
-            }
+            redoStack.clear();
             int index= std::stoi(args[1]);
             initial_string = new_string;
+            if (index<0){
+                index=0;
+            }
+            if(index > static_cast<int>(new_string.size())){
+                index = new_string.size();
+            }
             new_string= new_string.substr(0,index);
             int weight = initial_string.length()-new_string.length();
             undoStack.push(initial_string,weight);
