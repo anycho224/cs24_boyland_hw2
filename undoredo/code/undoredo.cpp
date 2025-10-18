@@ -196,7 +196,7 @@ int main() {
                 initial_string=last_undo->data;
                 delete last_undo;
                 std::cerr << "UNDO " << initial_string << std::endl;
-                std::cerrt <<initial_string << std::endl;
+                std::cerr <<initial_string << std::endl;
             }
         }
         else if(command == "REDO"){
