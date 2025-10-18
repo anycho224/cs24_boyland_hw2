@@ -142,8 +142,8 @@ int main() {
             for(int i=2; i<size;i++){
                 if(i>2){
                     new_string+= " ";
-                    new_string+=args[i];
                 }
+                 new_string+=args[i];
             }
             //removes quotes
             int len = new_string.size();
@@ -219,7 +219,7 @@ int main() {
             else{
                 Node* last_redo=redoStack.pop();
                 undoStack.push(last_redo->before,last_redo->after,last_redo->weight);
-                new_string=last_redo->before;
+                new_string=last_redo->after;
                 delete last_redo;
                 std::cerr << new_string << std::endl;
             }
