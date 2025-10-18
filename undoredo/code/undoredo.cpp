@@ -140,7 +140,7 @@ int main() {
             max_weight = std::stoi(args[1]);
             initial_string = args[2];
             undoStack.setMaxWeight(max_weight);
-            undoStack.setMaxWeight(max_weight);
+            redoStack.setMaxWeight(max_weight);
             std::cout << "CREATE " << max_weight << " \"" << initial_string << "\"" << std::endl;
         }
         else if (command == "APPEND"){
@@ -177,11 +177,10 @@ int main() {
             redoStack.clear();
             initial_string= initial_string.substr(0,index);
             std::cout<< "DELETE " << index << std::endl;
-            std::cout<< initial_string <<std::endl;
         }
         else if(command == "UNDO"){
             if(undoStack.isEmpty()){
-                std::cout << "Error: Nothing to undo" << std::endl;
+                std::cout << "Error: Nothing to undo." << std::endl;
             }
             else{
                 Node* last_undo = undoStack.pop();
@@ -193,7 +192,7 @@ int main() {
         }
         else if(command == "REDO"){
             if(redoStack.isEmpty()){
-                std::cout<< "Error: Nothing to Redo" << std::endl;
+                std::cout<< "Error: Nothing to Redo." << std::endl;
             }
             else{
                 Node* last_redo=redoStack.pop();
