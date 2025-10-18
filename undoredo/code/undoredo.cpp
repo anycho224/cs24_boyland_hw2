@@ -110,10 +110,6 @@ class Stack{
     void setMaxWeight(int mw){
         max_weight=mw;
     }
-    //destructor helps avoid memory leaks
-    ~Stack(){
-        clear();
-    }
 
 };
 
@@ -214,5 +210,6 @@ int main() {
             std::cerr<< initial_string << std::endl;
         }
     }
+    std::cerr <<initial_string << std::endl;
     return 0;
 }
