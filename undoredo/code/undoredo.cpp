@@ -165,10 +165,10 @@ int main() {
             undoStack.push(initial_string,initial_string.size()-index);
             redoStack.clear();
             initial_string= initial_string.substr(0,index);
-            std::cout<< "Delete" + weight << std::endl;
+            std::cout<< "DELETE " + index << std::endl;
         }
         else if(command == "UNDO"){
-            if(undoStack.isEmpty()){
+            if(redoStack.isEmpty()){
                 std::cout << "Error: Nothing to undo" << std::endl;
             }
             else{
@@ -179,7 +179,7 @@ int main() {
             }
         }
         else if(command == "REDO"){
-            if(undoStack.isEmpty()){
+            if(redoStack.isEmpty()){
                 std::cout<< "Error: Nothing to Redo" << std::endl;
             }
             else{
