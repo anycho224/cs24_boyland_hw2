@@ -211,9 +211,5 @@ int main() {
             last_command = command;
         }
     }
-    if(last_command!="DELETE" && last_command !="UNDO" && last_command!= "REDO"){
-        std::cout << initial_string << std::endl;
-    }
-
     return 0;
 }
