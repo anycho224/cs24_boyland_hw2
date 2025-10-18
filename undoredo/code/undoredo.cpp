@@ -29,7 +29,8 @@ std::vector<std::string> get_args(const std::string& command) {
     return args;
 }
 struct Node{
-    std::string data;
+    std::string before;
+    std::string after;
     int weight;
     Node* next;
 };
@@ -45,9 +46,10 @@ class Stack{
             total_weight = 0;
             max_weight=0;
         }
-        void push(const std::string&data, int weight){
+        void push(const std::string& before, const std::string& after, int weight){
             Node* n = new Node;
-            n->data=data;
+            n->before=before;
+            n->after=after;
             n->weight=weight;
             n->next=top;
             top=n;
@@ -79,7 +81,6 @@ class Stack{
                 Node* n = top;
                 top=top->next;
                 delete n;
-
             }
             total_weight=0;
         }
@@ -135,16 +136,27 @@ int main() {
         // Example of how to handle a command
         if (command == "CREATE"){
             max_weight = std::stoi(args[1]);
-            new_string= args[2];
             undoStack.setMaxWeight(max_weight);
             redoStack.setMaxWeight(max_weight);
+            int size=args.size();
+            for(int i=2; i<size;i++){
+                if(i>2){
+                    new_string+= " ";
+                    new_string+=args[i];
+                }
+            }
+            //removes quotes
+            int len = new_string.size();
+            if( len>=2 && new_string[0]== '"'&& new_string[len-1]== '"'){
+                new_string = new_string.substr(1,len-2);
+            }
             std::cerr << new_string << std::endl;
         }
         else if (command == "APPEND"){
             redoStack.clear();
             std::string string_to_append= "";
-            int count=args.size();
-            for(int i=1; i<count;i++){
+            int size=args.size();
+            for(int i=1; i<size;i++){
                 if(i>1){
                     string_to_append+= " ";
                 }
@@ -153,7 +165,7 @@ int main() {
             initial_string = new_string;
             new_string +=string_to_append;
             int weight = string_to_append.length();
-            undoStack.push(initial_string, weight);
+            undoStack.push(initial_string, new_string, weight);
             std::cerr << new_string << std::endl;
         }
         else if (command == "REPLACE"){
@@ -169,7 +181,7 @@ int main() {
                 }
             }
             if (count>0){
-                undoStack.push(initial_string,count);
+                undoStack.push(initial_string,new_string,count);
             }
             std::cerr << new_string << std::endl;
         }
@@ -185,7 +197,7 @@ int main() {
             }
             new_string= new_string.substr(0,index);
             int weight = initial_string.length()-new_string.length();
-            undoStack.push(initial_string,weight);
+            undoStack.push(initial_string,new_string,weight);
             std::cerr << new_string << std::endl;
         }
         else if(command == "UNDO"){
@@ -194,8 +206,8 @@ int main() {
             }
             else{
                 Node* last_undo = undoStack.pop();
-                redoStack.push(new_string,last_undo->weight);
-                new_string=last_undo->data;
+                redoStack.push(last_undo->before,last_undo->after,last_undo->weight);
+                new_string=last_undo->before;
                 delete last_undo;
                 std::cerr << new_string << std::endl;
             }
@@ -206,8 +218,8 @@ int main() {
             }
             else{
                 Node* last_redo=redoStack.pop();
-                undoStack.push(new_string,last_redo->weight);
-                new_string=last_redo->data;
+                undoStack.push(last_redo->before,last_redo->after,last_redo->weight);
+                new_string=last_redo->before;
                 delete last_redo;
                 std::cerr << new_string << std::endl;
             }
