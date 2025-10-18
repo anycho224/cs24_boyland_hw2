@@ -116,6 +116,7 @@ class Stack{
 int main() {
     int max_weight=0;
     std::string initial_string = "";
+    std::string new_string = "";
 
     Stack undoStack;
     Stack redoStack;
@@ -135,13 +136,12 @@ int main() {
         if (command == "CREATE"){
             max_weight = std::stoi(args[1]);
             std::string input = args[2];
-            std::string new_string = "";
             for (char c:input){
                 if(c != '"'){
                 new_string+=c;
                 }
             }
-            initial_string=new_string;
+            input=new_string;
             undoStack.setMaxWeight(max_weight);
             redoStack.setMaxWeight(max_weight);
             std::cerr << "CREATE " << max_weight << " \"" << initial_string << "\"" << std::endl;
@@ -165,13 +165,16 @@ int main() {
             char find_char= args[1][0];
             char replace_char = args[2][0];
             int count=0;
-            undoStack.push(initial_string,0);
-            redoStack.clear();
             for(char& c : initial_string){
                 if(c==find_char){
                     c=replace_char;
                     count++;
                 }
+            }
+            if (count>0){
+                undoStack.push(initial_string,0);
+                redoStack.clear();
+                initial_string = new_string;
             }
             std::cerr <<"REPLACE " << find_char << " " << replace_char << std::endl;
         }
