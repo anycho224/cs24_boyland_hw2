@@ -136,29 +136,23 @@ int main() {
         std::string command = args[0];
 
         // Example of how to handle a command
-        if (command == "PRINT") {
-            std::cout<< initial_string << std::endl;
-        }
-        else if (command == "CREATE"){
+        if (command == "CREATE"){
             max_weight = std::stoi(args[1]);
-            initial_string = args[2];
+            std::string input = args[2];
             std::string new_string = "";
-
-            int length = initial_string.length();
-            for (int i=0; i<length; i++){
-                if (initial_string[i]!= '"'){
-                    new_string+=initial_string[i];
+            for (char c:input){
+                if(c != '"'){
+                new_string+=c;
                 }
             }
-            initial_string= new_string;
+            initial_string=new_string;
             undoStack.setMaxWeight(max_weight);
             redoStack.setMaxWeight(max_weight);
             std::cout << "CREATE " << max_weight << " \"" << initial_string << "\"" << std::endl;
         }
         else if (command == "APPEND"){
             std::string string_to_append= "";
-            int count=args.size();
-            for(int i=1; i<count;i++){
+            for(int i=1; i<args.size();i++){
                 if(i>1){
                     string_to_append+= " ";
                 }
@@ -181,6 +175,9 @@ int main() {
                     count++;
                 }
             }
+            undoStack.pop();
+            undoStack.push(initial_string,count);
+            redoStack.clear();
             std::cout<<"REPLACE " << find_char << " " << replace_char << std::endl;
         }
         else if(command == "DELETE"){
@@ -213,6 +210,9 @@ int main() {
                 delete last_redo;
                 std::cout<< "REDO " << initial_string << std::endl;
             }
+        }
+        else if (command == "PRINT") {
+            std::cout<< initial_string << std::endl;
         }
     }
     return 0;
