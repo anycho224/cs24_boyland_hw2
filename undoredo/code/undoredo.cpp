@@ -124,6 +124,7 @@ int main() {
     redoStack.init();
 
     std::string line;
+    std::string last_command = "";
     bool printed = false;
     while (std::getline(std::cin, line)) {
         if (line.empty()) {
@@ -135,6 +136,7 @@ int main() {
         // Example of how to handle a command
         if (command == "PRINT") {
             std::cout<< initial_string << std::endl;
+            last_command = command;
         }
         else if (command == "CREATE"){
             max_weight = std::stoi(args[1]);
@@ -142,6 +144,7 @@ int main() {
             undoStack.setMaxWeight(max_weight);
             redoStack.setMaxWeight(max_weight);
             std::cout << "CREATE " << max_weight << " \"" << initial_string << "\"" << std::endl;
+            last_command = command;
         }
         else if (command == "APPEND"){
             std::string string_to_append= "";
@@ -157,6 +160,7 @@ int main() {
             redoStack.clear();
             initial_string += string_to_append;
             std::cout << "APPEND " << initial_string << std::endl;
+            last_command = command;
         }
         else if (command == "REPLACE"){
             char find_char= args[1][0];
@@ -170,6 +174,7 @@ int main() {
                 }
             }
             std::cout<<"REPLACE " << find_char << " " << replace_char << std::endl;
+            last_command = command;
         }
         else if(command == "DELETE"){
             int index= std::stoi(args[1]);
@@ -178,7 +183,7 @@ int main() {
             initial_string= initial_string.substr(0,index);
             std::cout<< "DELETE " << index << std::endl;
             std::cout << initial_string << std::endl;
-            printed = true;
+            last_command = command;
         }
         else if(command == "UNDO"){
             if(undoStack.isEmpty()){
@@ -191,6 +196,7 @@ int main() {
                 delete last_undo;
                 std::cout << "UNDO " << initial_string << std::endl;
             }
+            last_command = command;
         }
         else if(command == "REDO"){
             if(redoStack.isEmpty()){
@@ -203,9 +209,10 @@ int main() {
                 delete last_redo;
                 std::cout<< "REDO " << initial_string << std::endl;
             }
+            last_command = command;
         }
     }
-    if(!printed && initial_string.empty()){
+    if(last_command!="DELETE" && last_command !="UNDO" && last_command!= "REDO"){
         std::cout << initial_string << std::endl;
     }
 
