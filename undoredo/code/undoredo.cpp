@@ -181,7 +181,6 @@ int main() {
             redoStack.clear();
             initial_string= initial_string.substr(0,index);
             std::cerr << "DELETE " << initial_string << std::endl;
-            std::cout <<initial_string << std::endl;
         }
         else if(command == "UNDO"){
             if(undoStack.isEmpty()){
@@ -208,7 +207,7 @@ int main() {
             }
         }
         else if (command == "PRINT") {
-            std::cout << initial_string << std::endl;
+            std::cerr << initial_string << std::endl;
         }
     }
     return 0;
