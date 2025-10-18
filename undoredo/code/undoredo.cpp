@@ -140,7 +140,13 @@ int main() {
             std::cout << "CREATE " << max_weight << " \"" << initial_string << "\"" << std::endl;
         }
         else if (command == "APPEND"){
-            std::string string_to_append= args[1];
+            std::string string_to_append= "";
+            for(int i=1; i<args.size();i++){
+                if(i>1){
+                    string_to_append+= "";
+                }
+                string_to_append+=args[i];
+            }
             undoStack.push(initial_string,string_to_append.size());
             redoStack.clear();
             initial_string += string_to_append;
