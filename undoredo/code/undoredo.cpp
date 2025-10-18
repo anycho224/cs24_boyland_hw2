@@ -139,6 +139,7 @@ int main() {
             undoStack.setMaxWeight(max_weight);
             redoStack.setMaxWeight(max_weight);
             int size=args.size();
+            new_string="";
             for(int i=2; i<size;i++){
                 if(i>2){
                     new_string+= " ";
