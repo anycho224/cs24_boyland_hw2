@@ -168,7 +168,7 @@ int main() {
             std::cout<<"REPLACE " << find_char << " " << replace_char << std::endl;
         }
         else if(command == "DELETE"){
-            int index= stoi(args[1]);
+            int index= std::stoi(args[1]);
             undoStack.push(initial_string,initial_string.size()-index);
             redoStack.clear();
             initial_string= initial_string.substr(0,index);
@@ -183,6 +183,7 @@ int main() {
                 redoStack.push(initial_string,last_undo->weight);
                 initial_string=last_undo->data;
                 delete last_undo;
+                std::cout<< "UNDO " <<initial_string << std::endl;
             }
         }
         else if(command == "REDO"){
@@ -194,6 +195,7 @@ int main() {
                 undoStack.push(initial_string,last_redo->weight);
                 initial_string=last_redo->data;
                 delete last_redo;
+                std::cout<< "REDO " << initial_string <<std::endl;
             }
         }
     }
