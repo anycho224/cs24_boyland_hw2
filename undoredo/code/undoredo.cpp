@@ -143,10 +143,11 @@ int main() {
             std::string string_to_append= "";
             for(int i=1; i<args.size();i++){
                 if(i>1){
-                    string_to_append+= "";
+                    string_to_append+= " ";
                 }
                 string_to_append+=args[i];
             }
+            int weight = string_to_append.length();
             undoStack.push(initial_string,string_to_append.size());
             redoStack.clear();
             initial_string += string_to_append;
