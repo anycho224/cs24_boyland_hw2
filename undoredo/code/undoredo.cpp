@@ -124,7 +124,7 @@ int main() {
     redoStack.init();
 
     std::string line;
-
+    bool printed = false;
     while (std::getline(std::cin, line)) {
         if (line.empty()) {
             continue;
@@ -135,7 +135,6 @@ int main() {
         // Example of how to handle a command
         if (command == "PRINT") {
             std::cout<< initial_string << std::endl;
-            return 0;
         }
         else if (command == "CREATE"){
             max_weight = std::stoi(args[1]);
@@ -178,6 +177,8 @@ int main() {
             redoStack.clear();
             initial_string= initial_string.substr(0,index);
             std::cout<< "DELETE " << index << std::endl;
+            std::cout << initial_string << std::endl;
+            printed = true;
         }
         else if(command == "UNDO"){
             if(undoStack.isEmpty()){
@@ -203,6 +204,9 @@ int main() {
                 std::cout<< "REDO " << initial_string << std::endl;
             }
         }
+    }
+    if(!printed){
+        std::cout << initial_string << std::endl;
     }
 
     return 0;
