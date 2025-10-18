@@ -47,6 +47,9 @@ class Stack{
             max_weight=0;
         }
         void push(const std::string& before, const std::string& after, int weight){
+            while (max_weight >0 && (total_weight+weight)>max_weight){
+                removeBottom();
+            }
             Node* n = new Node;
             n->before=before;
             n->after=after;
@@ -55,8 +58,8 @@ class Stack{
             top=n;
             total_weight+=n->weight;
 
-            while (max_weight >0 && (total_weight+weight)>max_weight){
-                removeBottom();
+            if(total_weight<0){
+                total_weight=0;
             }
         }
         Node* pop(){
