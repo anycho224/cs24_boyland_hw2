@@ -125,7 +125,6 @@ int main() {
 
     std::string line;
     std::string last_command = "";
-    bool printed = false;
     while (std::getline(std::cin, line)) {
         if (line.empty()) {
             continue;
