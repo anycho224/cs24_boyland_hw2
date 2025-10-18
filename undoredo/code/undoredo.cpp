@@ -136,15 +136,9 @@ int main() {
         if (command == "CREATE"){
             max_weight = std::stoi(args[1]);
             std::string input = args[2];
-            for (char c:input){
-                if(c != '"'){
-                new_string+=c;
-                }
-            }
-            input=new_string;
             undoStack.setMaxWeight(max_weight);
             redoStack.setMaxWeight(max_weight);
-            std::cerr << "CREATE " << max_weight << " \"" << initial_string << "\"" << std::endl;
+            std::cerr << initial_string << std::endl;
         }
         else if (command == "APPEND"){
             std::string string_to_append= "";
@@ -159,7 +153,7 @@ int main() {
             undoStack.push(initial_string, weight);
             redoStack.clear();
             initial_string += string_to_append;
-            std::cerr << "APPEND " << initial_string << std::endl;
+            std::cerr << initial_string << std::endl;
         }
         else if (command == "REPLACE"){
             char find_char= args[1][0];
@@ -176,14 +170,14 @@ int main() {
                 redoStack.clear();
                 initial_string = new_string;
             }
-            std::cerr <<"REPLACE " << find_char << " " << replace_char << std::endl;
+            std::cerr << initial_string << std::endl;
         }
         else if(command == "DELETE"){
             int index= std::stoi(args[1]);
             undoStack.push(initial_string,initial_string.size()-index);
             redoStack.clear();
             initial_string= initial_string.substr(0,index);
-            std::cerr << "DELETE " << initial_string << std::endl;
+            std::cerr << initial_string << std::endl;
         }
         else if(command == "UNDO"){
             if(undoStack.isEmpty()){
@@ -194,7 +188,7 @@ int main() {
                 redoStack.push(initial_string,last_undo->weight);
                 initial_string=last_undo->data;
                 delete last_undo;
-                std::cerr << "UNDO " << initial_string << std::endl;
+                std::cerr << initial_string << std::endl;
             }
         }
         else if(command == "REDO"){
@@ -206,7 +200,7 @@ int main() {
                 undoStack.push(initial_string,last_redo->weight);
                 initial_string=last_redo->data;
                 delete last_redo;
-                std::cerr << "REDO " << initial_string << std::endl;
+                std::cerr << initial_string << std::endl;
             }
         }
         else if (command == "PRINT") {
