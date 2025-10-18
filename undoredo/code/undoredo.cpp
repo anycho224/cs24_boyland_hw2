@@ -135,7 +135,7 @@ int main() {
         // Example of how to handle a command
         if (command == "CREATE"){
             max_weight = std::stoi(args[1]);
-            initial_string= args[2];
+            new_string= args[2];
             undoStack.setMaxWeight(max_weight);
             redoStack.setMaxWeight(max_weight);
             std::cerr << new_string << std::endl;
@@ -156,7 +156,7 @@ int main() {
             new_string +=string_to_append;
             int weight = string_to_append.length();
             undoStack.push(initial_string, weight);
-            std::cerr << initial_string << std::endl;
+            std::cerr << new_string << std::endl;
         }
         else if (command == "REPLACE"){
             if(!redoStack.isEmpty()){
@@ -166,7 +166,7 @@ int main() {
             char replace_char = args[2][0];
             initial_string=new_string;
             int count=0;
-            for(char& c : initial_string){
+            for(char& c : new_string){
                 if(c==find_char){
                     c=replace_char;
                     count++;
@@ -194,10 +194,10 @@ int main() {
             }
             else{
                 Node* last_undo = undoStack.pop();
-                redoStack.push(initial_string,last_undo->weight);
+                redoStack.push(new_string,last_undo->weight);
                 new_string=last_undo->data;
                 delete last_undo;
-                std::cerr << initial_string << std::endl;
+                std::cerr << new_string << std::endl;
             }
         }
         else if(command == "REDO"){
@@ -209,11 +209,11 @@ int main() {
                 undoStack.push(new_string,last_redo->weight);
                 new_string=last_redo->data;
                 delete last_redo;
-                std::cerr << initial_string << std::endl;
+                std::cerr << new_string << std::endl;
             }
         }
         else if (command == "PRINT") {
-            std::cerr << initial_string << std::endl;
+            std::cerr << new_string << std::endl;
         }
     }
     undoStack.clear();
