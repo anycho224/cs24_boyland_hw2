@@ -154,7 +154,6 @@ int main() {
             if( len>=2 && new_string[0]== '"'&& new_string[len-1]== '"'){
                 new_string = new_string.substr(1,len-2);
             }
-            std::cout << new_string << std::endl;
         }
         else if (command == "APPEND"){
             std::string string_to_append= "";
@@ -170,7 +169,6 @@ int main() {
             int weight = string_to_append.length();
             undoStack.push(initial_string, new_string, weight);
             redoStack.clear();
-            std::cout << new_string << std::endl;
         }
         else if (command == "REPLACE"){
             char find_char= args[1][0];
@@ -187,7 +185,6 @@ int main() {
                 undoStack.push(initial_string,new_string,count);
                 redoStack.clear();
             }
-            std::cout << new_string << std::endl;
         }
         else if(command == "DELETE"){
             int index= std::stoi(args[1]);
@@ -202,11 +199,10 @@ int main() {
             int weight = initial_string.length()-new_string.length();
             undoStack.push(initial_string,new_string,weight);
             redoStack.clear();
-            std::cout << new_string << std::endl;
         }
         else if(command == "UNDO"){
             if(undoStack.isEmpty()){
-                std::cout << "Error: Nothing to undo." << std::endl;
+                std::cerr << "Error: Nothing to undo." << std::endl;
             }
             else{
                 Node* last_undo = undoStack.pop();
@@ -218,7 +214,7 @@ int main() {
         }
         else if(command == "REDO"){
             if(redoStack.isEmpty()){
-                std::cout << "Error: Nothing to redo." << std::endl;
+                std::cerr << "Error: Nothing to redo." << std::endl;
             }
             else{
                 Node* last_redo=redoStack.pop();
@@ -229,7 +225,7 @@ int main() {
             }
         }
         else if (command == "PRINT") {
-            std::cout << new_string << std::endl;
+            std::cerr << new_string << std::endl;
         }
     }
     undoStack.clear();
