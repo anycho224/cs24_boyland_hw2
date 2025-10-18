@@ -145,7 +145,6 @@ int main() {
             undoStack.setMaxWeight(max_weight);
             redoStack.setMaxWeight(max_weight);
             std::cerr << "CREATE " << max_weight << " \"" << initial_string << "\"" << std::endl;
-            std::cout <<initial_string << std::endl;
         }
         else if (command == "APPEND"){
             std::string string_to_append= "";
@@ -161,7 +160,6 @@ int main() {
             redoStack.clear();
             initial_string += string_to_append;
             std::cerr << "APPEND " << initial_string << std::endl;
-            std::cout <<initial_string << std::endl;
         }
         else if (command == "REPLACE"){
             char find_char= args[1][0];
@@ -176,7 +174,6 @@ int main() {
                 }
             }
             std::cerr <<"REPLACE " << find_char << " " << replace_char << std::endl;
-            std::cout <<initial_string << std::endl;
         }
         else if(command == "DELETE"){
             int index= std::stoi(args[1]);
@@ -196,7 +193,6 @@ int main() {
                 initial_string=last_undo->data;
                 delete last_undo;
                 std::cerr << "UNDO " << initial_string << std::endl;
-                std::cout <<initial_string << std::endl;
             }
         }
         else if(command == "REDO"){
@@ -209,7 +205,6 @@ int main() {
                 initial_string=last_redo->data;
                 delete last_redo;
                 std::cerr << "REDO " << initial_string << std::endl;
-                std::cout  <<initial_string << std::endl;
             }
         }
         else if (command == "PRINT") {
