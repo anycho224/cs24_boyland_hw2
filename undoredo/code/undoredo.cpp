@@ -211,7 +211,7 @@ int main() {
         }
         else if(command == "UNDO"){
             if(undoStack.isEmpty()){
-                std::cerr << "Error: Nothing to undo." << std::endl;
+                std::cout << "Error: Nothing to undo." << std::endl;
             }
             else{
                 Node* last_undo = undoStack.pop();
@@ -222,7 +222,7 @@ int main() {
         }
         else if(command == "REDO"){
             if(redoStack.isEmpty()){
-                std::cerr << "Error: Nothing to redo." << std::endl;
+                std::cout << "Error: Nothing to redo." << std::endl;
             }
             else{
                 Node* last_redo=redoStack.pop();
