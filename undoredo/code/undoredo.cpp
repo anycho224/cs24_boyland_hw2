@@ -138,9 +138,12 @@ int main() {
             initial_string= args[2];
             undoStack.setMaxWeight(max_weight);
             redoStack.setMaxWeight(max_weight);
-            std::cerr << initial_string << std::endl;
+            std::cerr << new_string << std::endl;
         }
         else if (command == "APPEND"){
+            if(!redoStack.isEmpty()){
+                redoStack.clear();
+            }
             std::string string_to_append= "";
             int count=args.size();
             for(int i=1; i<count;i++){
@@ -149,17 +152,20 @@ int main() {
                 }
                 string_to_append+=args[i];
             }
+            initial_string = new_string;
+            new_string +=string_to_append;
             int weight = string_to_append.length();
             undoStack.push(initial_string, weight);
-            redoStack.clear();
-            initial_string += string_to_append;
             std::cerr << initial_string << std::endl;
         }
         else if (command == "REPLACE"){
+            if(!redoStack.isEmpty()){
+                redoStack.clear();
+            }
             char find_char= args[1][0];
             char replace_char = args[2][0];
+            initial_string=new_string;
             int count=0;
-            std::string before = initial_string;
             for(char& c : initial_string){
                 if(c==find_char){
                     c=replace_char;
@@ -167,17 +173,20 @@ int main() {
                 }
             }
             if (count>0){
-                undoStack.push(before,count);
-                redoStack.clear();
+                undoStack.push(initial_string,count);
             }
-            std::cerr << initial_string << std::endl;
+            std::cerr << new_string << std::endl;
         }
         else if(command == "DELETE"){
+            if(!redoStack.isEmpty()){
+                redoStack.clear();
+            }
             int index= std::stoi(args[1]);
-            undoStack.push(initial_string,initial_string.size()-index);
-            redoStack.clear();
-            initial_string= initial_string.substr(0,index);
-            std::cerr << initial_string << std::endl;
+            initial_string = new_string;
+            new_string= new_string.substr(0,index);
+            int weight = initial_string.length()-new_string.length();
+            undoStack.push(initial_string,weight);
+            std::cerr << new_string << std::endl;
         }
         else if(command == "UNDO"){
             if(undoStack.isEmpty()){
@@ -186,7 +195,7 @@ int main() {
             else{
                 Node* last_undo = undoStack.pop();
                 redoStack.push(initial_string,last_undo->weight);
-                initial_string=last_undo->data;
+                new_string=last_undo->data;
                 delete last_undo;
                 std::cerr << initial_string << std::endl;
             }
@@ -197,8 +206,8 @@ int main() {
             }
             else{
                 Node* last_redo=redoStack.pop();
-                undoStack.push(initial_string,last_redo->weight);
-                initial_string=last_redo->data;
+                undoStack.push(new_string,last_redo->weight);
+                new_string=last_redo->data;
                 delete last_redo;
                 std::cerr << initial_string << std::endl;
             }
@@ -207,5 +216,7 @@ int main() {
             std::cerr << initial_string << std::endl;
         }
     }
+    undoStack.clear();
+    redoStack.clear();
     return 0;
 }
