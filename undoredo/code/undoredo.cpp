@@ -202,26 +202,24 @@ int main() {
         }
         else if(command == "UNDO"){
             if(undoStack.isEmpty()){
-                std::cout << "Error: Nothing to undo." << std::endl;
+                std::cerr << "Error: Nothing to undo." << std::endl;
             }
             else{
                 Node* last_undo = undoStack.pop();
                 redoStack.push(last_undo->before,last_undo->after,last_undo->weight);
                 new_string=last_undo->before;
                 delete last_undo;
-                std::cout << new_string << std::endl;
             }
         }
         else if(command == "REDO"){
             if(redoStack.isEmpty()){
-                std::cout << "Error: Nothing to redo." << std::endl;
+                std::cerr << "Error: Nothing to redo." << std::endl;
             }
             else{
                 Node* last_redo=redoStack.pop();
                 undoStack.push(last_redo->before,last_redo->after,last_redo->weight);
                 new_string=last_redo->after;
                 delete last_redo;
-                std::cout << new_string << std::endl;
             }
         }
         else if (command == "PRINT") {
