@@ -205,7 +205,7 @@ int main() {
             }
         }
     }
-    if(!printed){
+    if(!printed && initial_string.empty()){
         std::cout << initial_string << std::endl;
     }
 
