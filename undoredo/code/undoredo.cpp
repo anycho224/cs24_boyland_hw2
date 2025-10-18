@@ -42,6 +42,7 @@ class Stack{
     public:
         void init(){
             top = nullptr;
+            bottom = nullptr;
             total_weight = 0;
             max_weight=0;
         }
@@ -67,8 +68,12 @@ class Stack{
             return n;
          }
         bool isEmpty(){
-            top = nullptr;
-            return top;
+            if(top==nullptr){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         void clear(){
             while (top){
@@ -90,6 +95,7 @@ class Stack{
             total_weight-=curr->weight;
             delete curr;
             top = nullptr;
+            return;
             
         }
         //traveres until it reaches the end;
@@ -184,7 +190,6 @@ int main() {
                 delete last_redo;
             }
         }
-        // TODO: Handle other commands: CREATE, APPEND, REPLACE, DELETE, UNDO, REDO
     }
 
     return 0;
