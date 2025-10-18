@@ -135,6 +135,7 @@ int main() {
         // Example of how to handle a command
         if (command == "PRINT") {
             std::cout<< initial_string << std::endl;
+            return 0;
         }
         else if (command == "CREATE"){
             max_weight = std::stoi(args[1]);
@@ -192,7 +193,7 @@ int main() {
         }
         else if(command == "REDO"){
             if(redoStack.isEmpty()){
-                std::cout<< "Error: Nothing to Redo." << std::endl;
+                std::cout<< "Error: Nothing to redo." << std::endl;
             }
             else{
                 Node* last_redo=redoStack.pop();
