@@ -36,13 +36,12 @@ struct Node{
 class Stack{
     private:
         Node* top;
-        Node* bottom;
         int total_weight;
         int max_weight;
+        
     public:
         void init(){
             top = nullptr;
-            bottom = nullptr;
             total_weight = 0;
             max_weight=0;
         }
@@ -54,7 +53,7 @@ class Stack{
             top=n;
             total_weight+=n->weight;
 
-            while (total_weight>max_weight){
+            while (max_weight >0 && total_weight>max_weight){
                 removeBottom();
             }
         }
@@ -108,6 +107,9 @@ class Stack{
         prev->next=nullptr;
 
     }
+    void setMaxWeight(int mw){
+        max_weight=mw;
+    }
 
 };
 
@@ -137,6 +139,8 @@ int main() {
         else if (command == "CREATE"){
             max_weight = std::stoi(args[1]);
             initial_string = args[2];
+            undoStack.setMaxWeight(max_weight);
+            undoStack.setMaxWeight(max_weight);
             std::cout << "CREATE " << max_weight << " \"" << initial_string << "\"" << std::endl;
         }
         else if (command == "APPEND"){
@@ -172,10 +176,10 @@ int main() {
             undoStack.push(initial_string,initial_string.size()-index);
             redoStack.clear();
             initial_string= initial_string.substr(0,index);
-            std::cout<< "DELETE " + index << std::endl;
+            std::cout<< "DELETE " << index << std::endl;
         }
         else if(command == "UNDO"){
-            if(redoStack.isEmpty()){
+            if(undoStack.isEmpty()){
                 std::cout << "Error: Nothing to undo" << std::endl;
             }
             else{
