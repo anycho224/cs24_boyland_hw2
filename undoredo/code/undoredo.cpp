@@ -177,6 +177,7 @@ int main() {
             redoStack.clear();
             initial_string= initial_string.substr(0,index);
             std::cout<< "DELETE " << index << std::endl;
+            std::cout<< initial_string <<std::endl;
         }
         else if(command == "UNDO"){
             if(undoStack.isEmpty()){
@@ -187,7 +188,7 @@ int main() {
                 redoStack.push(initial_string,last_undo->weight);
                 initial_string=last_undo->data;
                 delete last_undo;
-                std::cout<< "UNDO " <<initial_string << std::endl;
+                std::cout << "UNDO " << initial_string << std::endl;
             }
         }
         else if(command == "REDO"){
@@ -199,7 +200,7 @@ int main() {
                 undoStack.push(initial_string,last_redo->weight);
                 initial_string=last_redo->data;
                 delete last_redo;
-                std::cout<< "REDO " << initial_string <<std::endl;
+                std::cout<< "REDO " << initial_string << std::endl;
             }
         }
     }
