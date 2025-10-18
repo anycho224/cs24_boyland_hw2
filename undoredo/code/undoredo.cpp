@@ -109,8 +109,6 @@ class Stack{
     }
     void setMaxWeight(int mw){
         max_weight=mw;
-        while (max_weight >0 && total_weight>max_weight){
-            removeBottom();
     }
 
 };
